@@ -131,6 +131,55 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     }
 }
 
+// RGB Matrix Layer Indicators
+#ifdef RGB_MATRIX_ENABLE
+
+void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t first, uint8_t last) {
+    HSV hsv = {hue, sat, val};
+
+
+    RGB rgb = hsv_to_rgb(hsv);
+    for (uint8_t i = first; i <= last; i++) {
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+    }
+}
+// TODO figure out the right colors
+bool rgb_matrix_indicators_user(void) {
+    switch (get_highest_layer(layer_state)) {
+        case _SYMBOLS:
+            rgb_matrix_layer_helper(HSV_PURPLE, 6, 11);
+            rgb_matrix_layer_helper(HSV_PURPLE, 33, 38);
+            break;
+        case _NUMS:
+            rgb_matrix_layer_helper(HSV_GREEN, 6, 11);
+            rgb_matrix_layer_helper(HSV_GREEN, 33, 38);
+            break;
+        case _UTIL:
+            rgb_matrix_layer_helper(HSV_WHITE, 6, 11);
+            rgb_matrix_layer_helper(HSV_WHITE, 33, 38);
+
+            break;
+        default: {
+            rgb_matrix_layer_helper(HSV_GOLD, 0, 5);
+            rgb_matrix_layer_helper(HSV_GOLD, 27, 32);
+            break;
+        }
+    }
+    return false;
+}
+
+#endif // RGB_MATRIX_ENABLE
+
+
+// Keyboard Startup Code
+void keyboard_post_init_user(void) {
+#ifdef RGB_MATRIX_ENABLE
+    rgb_matrix_enable_noeeprom();
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+#endif
+}
+
+
 // Handle custom keycodes
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint8_t saved_mods   = 0;
@@ -159,7 +208,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_BSPC);
             }
             return false;
+// Translate custom keycodes to RGB Matrix modes
+#ifdef RGB_MATRIX_ENABLE
+        case RGB_SOL:
+            if (record->event.pressed) {
+                rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            }
+            break;
+        case RGB_BRE:
+            if (record->event.pressed) {
+                rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+            }
+            break;
+        case RGB_REW:
+            if (record->event.pressed) {
+                rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE_WIDE);
+            }
+            break;
+        case RGB_RE:
+            if (record->event.pressed) {
+                rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE);
+            }
+            break;
+#endif // RGB_MATRIX_ENABLE
     }
     return true;
-
 }
