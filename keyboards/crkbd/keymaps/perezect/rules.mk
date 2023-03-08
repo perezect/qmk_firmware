@@ -1,0 +1,9 @@
+OLED_ENABLE  = yes
+RGBLIGHT_ENABLE = no
+RGB_MATRIX_ENABLE  = yes
+BOOTLOADER = atmel-dfu
+MOUSEKEY_ENABLE = no
+
+WPM_ENABLE = yes
+
+LTO_ENABLE = yes
