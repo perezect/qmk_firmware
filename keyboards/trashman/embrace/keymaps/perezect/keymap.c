@@ -53,7 +53,7 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_DEFAULT] = LAYOUT(
     //,-------------------------------------------------------.
-        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, //|---------------------------------------------------.
+        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -61,18 +61,72 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSPC,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          T_NUM, XXXXXXX, XXXXXXX, XXXXXXX
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    [_SYMBOLS] = LAYOUT(
+    //,-------------------------------------------------------.
+        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_GRV,  KC_EXLM, KC_AT,  KC_HASH,  KC_DLR, KC_PERC,  KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  KC_DEL,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        TG_SYM, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_LBRC,  KC_RBRC, XXXXXXX, KC_UP,  KC_LBRC, KC_RBRC, KC_BSLS,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+    KC_LSFT, KC_ESC, KC_NO, LCTL(KC_INS),LSFT(KC_INS), KC_PGUP, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          TG_UTIL, XXXXXXX, XXXXXXX, XXXXXXX
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    [_NUMS] = LAYOUT(
+    //,-------------------------------------------------------.
+        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_TAB,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_7,    KC_8,    KC_9,    KC_0,  XXXXXXX,  KC_BSPC,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        TG_UTIL,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_6,    KC_4,     KC_5,   KC_6,   XXXXXXX, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_1,     KC_2,   KC_3,  KC_DOT, KC_SLSH, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,           TG_NUM,  KC_0, XXXXXXX,  XXXXXXX
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    [_UTIL] = LAYOUT(
+    //,-------------------------------------------------------.
+       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,/*|-----------------------------------------*/ XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, RGB_REW, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, RGB_RE,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LGUI, TG_UTIL, XXXXXXX,           XXXXXXX,          XXXXXXX,          TG_UTIL, XXXXXXX, XXXXXXX, XXXXXXX
     //`-----------------------------------------------------------------------------------------------------------'
     )
+    // TODO ADD GAME SPECIFIC LAYERS
 };
 
 //Encoder
 void encoder_update_user(uint8_t index, bool clockwise) {
      if (index == 0) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
+        switch(biton32(layer_state)){
+            case _SYMBOLS:
+                if (clockwise) {
+                    tap_code(KC_WH_U);
+                } else {
+                    tap_code(KC_WH_D);
+                }
+                break;
+            default:
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+                break;
         }
     }
 }
