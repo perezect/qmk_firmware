@@ -61,6 +61,7 @@ static const uint16_t top_row[6] = {4, 9, 14, 18, 23, 27};
 #define TG_OSRS TG(_OSRS)
 #define T_OSRS2 TT(_OSRS2)
 #define TG_OSRS2 TG(_OSRS2)
+#define MO_OSRS2 MO(_OSRS2)
 
 #define TG_FPS TG(_FPS)
 
@@ -116,9 +117,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,-------------------------------------------------------.
        TG_DOTA, TG_OSRS, TG_FPS, XXXXXXX, XXXXXXX, XXXXXXX,/*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, RGB_REW, RGB_RE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, RGB_REW, RGB_RE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -160,13 +161,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,-------------------------------------------------------.
         KC_ESC,   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,     KC_D,  XXXXXXX, BSP_DEL,
+        KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,     KC_7,    KC_8,     KC_9,  KC_0,    XXXXXXX, BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        T_OSRS2,   KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,   KC_L,  KC_SCLN,  KC_ENT,
+        T_OSRS2,   KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_4,    KC_5,    KC_6,   XXXXXXX,  KC_SCLN,  KC_ENT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_1,   KC_2,    KC_3,  KC_DOT, KC_UP,  KC_RSFT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          T_OSRS2, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          MO_OSRS2, KC_LEFT, KC_DOWN, KC_RIGHT
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
@@ -180,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        TO_DEF, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          TG_OSRS2,  XXXXXXX, KC_MPRV, KC_MNXT
+        TO_DEF, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          KC_TRNS,  XXXXXXX, KC_MPRV, KC_MNXT
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
