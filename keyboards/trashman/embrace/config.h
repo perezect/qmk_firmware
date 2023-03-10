@@ -1,13 +1,4 @@
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config_common.h"
-
-#define VENDOR_ID     0xFEAE
-#define PRODUCT_ID    0x8847
-#define DEVICE_VER    0x0001
-#define MANUFACTURER  TheVan Keyboards
-#define PRODUCT       Embrace
-#define DESCRIPTION   Embrace
+#pragma once
 
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 12
@@ -23,13 +14,10 @@
 #define BACKLIGHT_PIN F6
 
 #define DEBOUNCE 5
-#define TAPPING_TERM 175
 
 #define USB_MAX_POWER_CONSUMPTION 100
 #define PERMISSIVE_HOLD
 #define RGB_DI_PIN F0
 #define RGBLED_NUM 52
-#define RGBLIGHT_ANIMATIONS
 #define RGBLIGHT_SLEEP
 #define IS_COMMAND() ( keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) )
-#endif

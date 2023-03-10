@@ -19,14 +19,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
-#include "Embrace.h"
+#include QMK_KEYBOARD_H
 
 enum layer_names {
   _DEFAULT,
   _SYMBOLS,
   _NUMS,
-  _UTIL
+  _UTIL,
+  _DOTA,
+  _DOTA2,
+  _OSRS,
+  _OSRS2,
+  _FPS
 };
 
 enum custom_keycodes {
@@ -37,7 +41,12 @@ enum custom_keycodes {
     RGB_RE    // RGB_MATRIX_SOLID_REACTIVE
 };
 
+// Since the top row isn't a continuous string of LEDs, create an array for referencing
+static const uint16_t top_row[6] = {4, 9, 14, 18, 23, 27};
+
 // Layer toggle and switch
+#define TO_DEF TO(_DEFAULT)
+
 #define T_SYM TT(_SYMBOLS)
 #define TG_SYM TG(_SYMBOLS)
 
@@ -45,41 +54,51 @@ enum custom_keycodes {
 #define TG_NUM TG(_NUMS)
 
 #define TG_UTIL TG(_UTIL)
+
+#define TG_DOTA TG(_DOTA)
+#define MO_DOTA MO(_DOTA2)
+
+#define TG_OSRS TG(_OSRS)
+#define T_OSRS2 TT(_OSRS2)
+#define TG_OSRS2 TG(_OSRS2)
+
+#define TG_FPS TG(_FPS)
+
 // Layer keys with functionality on tap
 #define NUM_F LT(_NUMS, KC_F)
 #define NUM_J LT(_NUMS, KC_J)
 
 // Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_DEFAULT] = LAYOUT(
+    [_DEFAULT] = LAYOUT_split_space(
     //,-------------------------------------------------------.
         KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        T_SYM,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN,  KC_QUOT,
+        T_SYM,    KC_A,    KC_S,    KC_D,    NUM_F,   KC_G,    KC_H,    NUM_J,    KC_K,    KC_L,  KC_SCLN,  KC_QUOT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSPC,
+        SC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  SC_RSPC,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          T_NUM, XXXXXXX, XXXXXXX, XXXXXXX
+        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          T_NUM,   KC_RGUI, XXXXXXX, XXXXXXX
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
-    [_SYMBOLS] = LAYOUT(
+    [_SYMBOLS] = LAYOUT_split_space(
     //,-------------------------------------------------------.
-        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ XXXXXXX,
+        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_GRV,  KC_EXLM, KC_AT,  KC_HASH,  KC_DLR, KC_PERC,  KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  KC_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         TG_SYM, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_LBRC,  KC_RBRC, XXXXXXX, KC_UP,  KC_LBRC, KC_RBRC, KC_BSLS,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    KC_LSFT, KC_ESC, KC_NO, LCTL(KC_INS),LSFT(KC_INS), KC_PGUP, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
+    KC_LSFT, KC_ESC, KC_NO, LCTL(KC_INS),LSFT(KC_INS), KC_PGUP, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_UP, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          TG_UTIL, XXXXXXX, XXXXXXX, XXXXXXX
+        KC_LGUI, KC_LALT, KC_LCTL,           KC_ENT,          KC_SPC,          TG_UTIL, KC_LEFT, KC_DOWN, KC_RIGHT
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
-    [_NUMS] = LAYOUT(
+    [_NUMS] = LAYOUT_split_space(
     //,-------------------------------------------------------.
         KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -93,24 +112,97 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
-    [_UTIL] = LAYOUT(
+    [_UTIL] = LAYOUT_split_space(
     //,-------------------------------------------------------.
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,/*|-----------------------------------------*/ XXXXXXX,
+       TG_DOTA, TG_OSRS, TG_FPS, XXXXXXX, XXXXXXX, XXXXXXX,/*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, RGB_REW, RGB_RE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, RGB_REW, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, RGB_RE,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LGUI, TG_UTIL, XXXXXXX,           XXXXXXX,          XXXXXXX,          TG_UTIL, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, TG_UTIL, XXXXXXX,           TG_UTIL,          TG_UTIL,          TG_UTIL, XXXXXXX, KC_MPRV, KC_MNXT
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    // Generic MOBA layer
+    [_DOTA] = LAYOUT_split_space(
+    //,-------------------------------------------------------.
+        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_GRV,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN, KC_ENT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_UP,  KC_RSFT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,         MO_DOTA  , KC_LEFT, KC_DOWN, KC_RIGHT
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    // Second layer for MOBAs. For reverting back to default layer, and for things like F9
+    [_DOTA2] = LAYOUT_split_space(
+    //,-------------------------------------------------------.
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /*|-----------------------------------------*/ KC_MPLY,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F9, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        TO_DEF, XXXXXXX, XXXXXXX,           XXXXXXX,          XXXXXXX,        KC_TRNS , XXXXXXX, KC_MPRV, KC_MNXT
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    [_OSRS] = LAYOUT_split_space(
+    //,-------------------------------------------------------.
+        KC_ESC,   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5, /*|-----------------------------------------*/ KC_MPLY,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,     KC_D,  XXXXXXX, BSP_DEL,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        T_OSRS2,   KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,   KC_L,  KC_SCLN,  KC_ENT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          T_OSRS2, XXXXXXX, XXXXXXX, XXXXXXX
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    [_OSRS2] = LAYOUT_split_space(
+    //,-------------------------------------------------------.
+        KC_ESC,   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5, /*|-----------------------------------------*/ KC_MPLY,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        TG_OSRS2, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN,  KC_ENT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        TO_DEF, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          TG_OSRS2,  XXXXXXX, KC_MPRV, KC_MNXT
+    //`-----------------------------------------------------------------------------------------------------------'
+    ),
+
+    // Generic gaming layer with things like the Super key disabled and enter moved back to a muscle memory position
+    [_FPS] = LAYOUT_split_space(
+    //,-------------------------------------------------------.
+        KC_1,     KC_2,    KC_3,    KC_4,    KC_5,    KC_6, /*|-----------------------------------------*/ KC_MPLY,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN,  KC_ENT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+    //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,         TO_DEF, XXXXXXX,  KC_MPRV, KC_MNXT
     //`-----------------------------------------------------------------------------------------------------------'
     )
-    // TODO ADD GAME SPECIFIC LAYERS
+
 };
 
 //Encoder
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
      if (index == 0) {
         switch(biton32(layer_state)){
             case _SYMBOLS:
@@ -120,6 +212,13 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                     tap_code(KC_WH_D);
                 }
                 break;
+            case _NUMS:
+                if (clockwise) {
+                    tap_code(KC_MNXT);
+                }
+                else {
+                    tap_code(KC_MPRV);
+                }
             default:
                 if (clockwise) {
                     tap_code(KC_VOLU);
@@ -129,39 +228,50 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 break;
         }
     }
+    return false;
 }
 
 // RGB Matrix Layer Indicators
 #ifdef RGB_MATRIX_ENABLE
 
 void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t first, uint8_t last) {
-    HSV hsv = {hue, sat, val};
 
+    HSV hsv = {hue, sat, val};
 
     RGB rgb = hsv_to_rgb(hsv);
     for (uint8_t i = first; i <= last; i++) {
-        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+        rgb_matrix_set_color(top_row[i], rgb.r, rgb.g, rgb.b);
     }
 }
 // TODO figure out the right colors
 bool rgb_matrix_indicators_user(void) {
     switch (get_highest_layer(layer_state)) {
         case _SYMBOLS:
-            rgb_matrix_layer_helper(HSV_PURPLE, 6, 11);
-            rgb_matrix_layer_helper(HSV_PURPLE, 33, 38);
+            rgb_matrix_layer_helper(HSV_GOLDENROD, 0, 1);
             break;
         case _NUMS:
-            rgb_matrix_layer_helper(HSV_GREEN, 6, 11);
-            rgb_matrix_layer_helper(HSV_GREEN, 33, 38);
+            rgb_matrix_layer_helper(HSV_GOLDENROD, 0, 3);
             break;
         case _UTIL:
-            rgb_matrix_layer_helper(HSV_WHITE, 6, 11);
-            rgb_matrix_layer_helper(HSV_WHITE, 33, 38);
-
+            rgb_matrix_layer_helper(HSV_GOLDENROD, 0, 5);
+            break;
+        case _DOTA:
+            rgb_matrix_layer_helper(HSV_RED, 0, 5);
+            break;
+        case _DOTA2:
+            rgb_matrix_layer_helper(HSV_MAGENTA, 0, 5);
+            break;
+        case _OSRS:
+            rgb_matrix_layer_helper(HSV_GREEN, 0, 5);
+            break;
+        case _OSRS2:
+            rgb_matrix_layer_helper(HSV_PURPLE, 0, 5);
+            break;
+        case _FPS:
+            rgb_matrix_layer_helper(HSV_PINK, 0, 5);
             break;
         default: {
-            rgb_matrix_layer_helper(HSV_GOLD, 0, 5);
-            rgb_matrix_layer_helper(HSV_GOLD, 27, 32);
+            rgb_matrix_layer_helper(HSV_CYAN, 0, 5);
             break;
         }
     }
@@ -213,6 +323,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_SOL:
             if (record->event.pressed) {
                 rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+                rgb_matrix_set_color_all(RGB_CYAN);
             }
             break;
         case RGB_BRE:
@@ -223,6 +334,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_REW:
             if (record->event.pressed) {
                 rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE_WIDE);
+                rgb_matrix_set_color_all(RGB_GOLDENROD);
             }
             break;
         case RGB_RE:
