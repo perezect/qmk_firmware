@@ -22,10 +22,10 @@ SOFTWARE.
 
 #pragma once
 
-#define MATRIX_ROWS 5
-#define MATRIX_COLS 12
-#define MATRIX_ROW_PINS { B0, D4, D6, B7, B3 }
-#define MATRIX_COL_PINS { F1, F4, F5, B6, B5, B4, D7, D0, D5, D3, D2, D1 }
+// #define MATRIX_ROWS 5
+// #define MATRIX_COLS 12
+// #define MATRIX_ROW_PINS { B0, D4, D6, B7, B3 }
+// #define MATRIX_COL_PINS { F1, F4, F5, B6, B5, B4, D7, D0, D5, D3, D2, D1 }
 
 #define ENCODERS_PAD_A { B2 }
 #define ENCODERS_PAD_B { B1 }
