@@ -68,6 +68,11 @@ static const uint16_t top_row[6] = {4, 9, 14, 18, 23, 27};
 // Layer keys with functionality on tap
 #define NUM_F LT(_NUMS, KC_F)
 #define NUM_J LT(_NUMS, KC_J)
+#define SYM_D LT(_SYMBOLS, KC_D)
+#define SYM_K LT(_SYMBOLS, KC_K)
+
+#define OS_F LT(_OSRS2, KC_F)
+#define OS_J LT(_OSRS2, KC_J)
 
 // Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -77,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        T_SYM,    KC_A,    KC_S,    KC_D,    NUM_F,   KC_G,    KC_H,    NUM_J,    KC_K,    KC_L,  KC_SCLN,  KC_QUOT,
+        T_SYM,    KC_A,    KC_S,    SYM_D,    NUM_F,   KC_G,   KC_H,    NUM_J,   SYM_K,    KC_L,  KC_SCLN,  KC_QUOT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         SC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  SC_RSPC,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -161,13 +166,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,-------------------------------------------------------.
         KC_ESC,   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,     KC_7,    KC_8,     KC_9,  KC_0,    XXXXXXX, BSP_DEL,
+        KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        T_OSRS2,   KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_4,    KC_5,    KC_6,   XXXXXXX,  KC_SCLN,  KC_ENT,
+        T_OSRS2, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN,  KC_ENT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_1,   KC_2,    KC_3,  KC_DOT, KC_UP,  KC_RSFT,
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_UP,  KC_RSFT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          MO_OSRS2, KC_LEFT, KC_DOWN, KC_RIGHT
+        XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          MO_OSRS2,  KC_LEFT, KC_DOWN, KC_RIGHT
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
@@ -175,13 +180,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,-------------------------------------------------------.
         KC_ESC,   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5, /*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
+        KC_TAB,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,     KC_7,    KC_8,     KC_9,  KC_0,    XXXXXXX, BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        TG_OSRS2, KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN,  KC_ENT,
+        TG_OSRS2,   KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_4,    KC_5,    KC_6,   XXXXXXX,  KC_SCLN,  KC_ENT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_1,   KC_2,    KC_3,  KC_DOT, KC_SLSH,  KC_RSFT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        TO_DEF, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          KC_TRNS,  XXXXXXX, KC_MPRV, KC_MNXT
+        TO_DEF, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,          KC_TRNS, XXXXXXX, KC_MPRV, KC_MNXT
     //`-----------------------------------------------------------------------------------------------------------'
     ),
 
@@ -248,25 +253,25 @@ void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t firs
 bool rgb_matrix_indicators_user(void) {
     switch (get_highest_layer(layer_state)) {
         case _SYMBOLS:
-            rgb_matrix_layer_helper(HSV_GOLDENROD, 0, 1);
+            rgb_matrix_layer_helper(HSV_GOLD, 0, 1);
             break;
         case _NUMS:
-            rgb_matrix_layer_helper(HSV_GOLDENROD, 0, 3);
+            rgb_matrix_layer_helper(HSV_GOLD, 0, 3);
             break;
         case _UTIL:
-            rgb_matrix_layer_helper(HSV_GOLDENROD, 0, 5);
+            rgb_matrix_layer_helper(HSV_GOLD, 0, 5);
             break;
         case _DOTA:
-            rgb_matrix_layer_helper(HSV_RED, 0, 5);
+            rgb_matrix_layer_helper(HSV_CHARTREUSE, 0, 5);
             break;
         case _DOTA2:
             rgb_matrix_layer_helper(HSV_MAGENTA, 0, 5);
             break;
         case _OSRS:
-            rgb_matrix_layer_helper(HSV_GREEN, 0, 5);
+            rgb_matrix_layer_helper(HSV_MAGENTA, 0, 5);
             break;
         case _OSRS2:
-            rgb_matrix_layer_helper(HSV_PURPLE, 0, 5);
+            rgb_matrix_layer_helper(HSV_CHARTREUSE, 0, 5);
             break;
         case _FPS:
             rgb_matrix_layer_helper(HSV_PINK, 0, 5);
