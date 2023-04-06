@@ -68,6 +68,7 @@ static const uint16_t top_row[6] = {4, 9, 14, 18, 23, 27};
 // Layer keys with functionality on tap
 #define NUM_F LT(_NUMS, KC_F)
 #define NUM_J LT(_NUMS, KC_J)
+#define SYM_J LT(_SYMBOLS, KC_J)
 #define SYM_D LT(_SYMBOLS, KC_D)
 #define SYM_K LT(_SYMBOLS, KC_K)
 
@@ -82,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   BSP_DEL,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        T_SYM,    KC_A,    KC_S,    SYM_D,    NUM_F,   KC_G,   KC_H,    NUM_J,   SYM_K,    KC_L,  KC_SCLN,  KC_QUOT,
+        T_SYM,    KC_A,    KC_S,    SYM_D,    NUM_F,   KC_G,   KC_H,    SYM_J,   KC_K,    KC_L,  KC_SCLN,  KC_QUOT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         SC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_SLSH,  SC_RSPC,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -122,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,-------------------------------------------------------.
        TG_DOTA, TG_OSRS, TG_FPS, XXXXXXX, XXXXXXX, XXXXXXX,/*|-----------------------------------------*/ KC_MPLY,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, RGB_REW, RGB_RE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, RGB_BRE, RGB_SOL, RGB_REW, RGB_RE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -141,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         KC_GRV,    KC_A,    KC_S,    KC_D,    KC_F,   KC_G,    KC_H,    KC_J,    KC_K,    KC_L,  KC_SCLN, KC_ENT,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_UP,  KC_RSFT,
+        KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM,  KC_DOT, KC_UP,  KC_SLSH,
     //|--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
         XXXXXXX, KC_LALT, KC_LCTL,           KC_SPC,          KC_SPC,         MO_DOTA  , KC_LEFT, KC_DOWN, KC_RIGHT
     //`-----------------------------------------------------------------------------------------------------------'
