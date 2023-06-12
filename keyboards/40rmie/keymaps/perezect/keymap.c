@@ -61,17 +61,27 @@ enum custom_keycodes {
 // Layer keys with functionality on tap
 #define NUM_F LT(_NUMS, KC_F)
 #define NUM_J LT(_NUMS, KC_J)
+#define SYM_J LT(_SYMBOLS, KC_J)
+#define SYM_D LT(_SYMBOLS, KC_D)
+#define SYM_K LT(_SYMBOLS, KC_K)
+
+#define OS_F LT(_OSRS2, KC_F)
+#define OS_J LT(_OSRS2, KC_J)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_DEFAULT] = KEYMAP(
         //,-----------------------------------------------------------------------------------------------------------------------------------------------------.
-                  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,                    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     XXXXXXX, KC_MPLY, XXXXXXX, 
+                  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,                    KC_F9,   KC_F10,   KC_F11,   KC_F12,    XXXXXXX, KC_MPLY, XXXXXXX, 
         //|---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
-            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,   XXXXXXX, KC_MPLY, XXXXXXX, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,            KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,            KC_TRNS, KC_TRNS, KC_TRNS
+            KC_TAB,   KC_Q,      KC_W,      KC_E,    KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,    BSP_DEL,   XXXXXXX, KC_MPLY, XXXXXXX,
+        //|---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
+            T_SYM,    KC_A,    KC_S,    SYM_D,    NUM_F,   KC_G,   KC_H,    SYM_J,   KC_K,    KC_L,  KC_SCLN,  XXXXXXX,  KC_QUOT,  XXXXXXX,
+        //|---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
+            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
+        //|---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------|
+            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS, KC_TRNS, KC_TRNS
+        //`-----------------------------------------------------------------------------------------------------------------------------------------------------'
     ),
 
     [_SYMBOLS] = KEYMAP(
