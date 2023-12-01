@@ -43,6 +43,8 @@ enum custom_keycodes {
 // Layer keys with functionality on tap
 #define NUM_F LT(_NUMS, KC_F)
 #define NUM_J LT(_NUMS, KC_J)
+// Macros
+#define PRT_WIND LALT(KC_PSCR)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DEFAULT] = LAYOUT_split_3x6_3(
@@ -62,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_GRV, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL, KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      TG_SYM,   XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_LBRC,                     KC_RBRC,  XXXXXXX, KC_UP, KC_LBRC, KC_RBRC, KC_BSLS,
+      TG_SYM,   XXXXXXX, XXXXXXX, PRT_WIND, KC_PGDN, KC_LBRC,                     KC_RBRC,  XXXXXXX, KC_UP, KC_LBRC, KC_RBRC, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, KC_ESC, KC_NO, LCTL(KC_INS), LSFT(KC_INS), KC_PGUP,              XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
